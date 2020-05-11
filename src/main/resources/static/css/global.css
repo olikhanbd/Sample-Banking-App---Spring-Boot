@@ -1,0 +1,101 @@
+.form-container{
+    position: absolute;
+    top: 15vh;
+    background: #fff;
+    padding: 30px;
+    border-radius: 10px;
+    box-shadow: 0px 0px 10px 0px #000;
+}
+.user-list-table{
+    border-collapse: collapse;
+    margin: 25px 0;
+    font-size: 0.9em;
+    min-width: 800px;
+    border-radius: 5px 5px 0 0;
+    overflow: hidden;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.15);
+}
+
+.user-list-table thead tr{
+    background-color: #009879;
+    color: #fff;
+    text-align: left;
+    font-weight: bold;
+}
+
+.user-list-table th,
+.user-list-table td {
+    padding: 12px 15px;
+}
+
+.user-list-table tbody tr{
+    border-bottom: 1px solid #ddd;
+}
+.user-list-table tbody tr:nth-of-type(even){
+    background-color: #f3f3f3;
+}
+.user-list-table tbody tr:last-of-type{
+    border-bottom: 2px solid #009879;
+}
+
+.container-form{
+    border-collapse: collapse;
+    margin: 0 auto;
+    padding: 20px;
+    font-size: 0.9em;
+    width: 800px;
+    border-radius: 5px 5px 0 0;
+    text-align: center;
+    overflow: hidden;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.15);
+}
+
+
+.container-form label{
+    text-align: left;
+    width: 240px;
+    display: inline-block;
+}
+
+#menu {
+    margin: 0;
+    padding: 0;
+}
+
+#menu li{
+    list-style: none;
+    display: inline-block;
+}
+
+#menu li a{
+    text-decoration: none;
+    position: relative;
+    color: #fff;
+    font-size: 25px;
+    font-weight: 700;
+    font-family: sans-serif;
+    display: block;
+    overflow: hidden;
+    transition: 0.7s all;
+    padding: 14px 30px;
+    text-transform: uppercase;
+
+}
+
+#menu li a:before{
+    content: '';
+    width: 30px;
+    position: absolute;
+    border-bottom: 4px solid #fff;
+    bottom: 0;
+    right: 350px;
+    transition: 0.7s all;
+}
+
+#menu li a:hover:before{
+    right: 0;
+}
+.error {
+    color: red;
+    font-style: italic;
+}
