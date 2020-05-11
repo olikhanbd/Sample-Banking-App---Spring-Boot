@@ -6,8 +6,13 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.oli.authdemo.dao.EmployeeRepository;
+import com.oli.authdemo.dao.MenuRepository;
+import com.oli.authdemo.dao.RoleRepository;
 import com.oli.authdemo.dao.UserRepository;
-
+import com.oli.authdemo.model.Employee;
+import com.oli.authdemo.model.Menu;
+import com.oli.authdemo.model.Role;
 import com.oli.authdemo.model.User;
 
 @Service
@@ -15,7 +20,15 @@ public class AuthenticationService {
 	
 	@Autowired
 	private UserRepository userRepo;
+	
+	@Autowired
+	private EmployeeRepository employeeRepo;
+	
+	@Autowired
+	private RoleRepository roleRepo;
 
+	@Autowired
+	private MenuRepository menuRepo;
 	
 	public Optional<User> validateUser(String email, String pass) {
 		System.out.println(email + " " + pass);
@@ -38,6 +51,10 @@ public class AuthenticationService {
 		userRepo.save(user);
 	}
 	
+	public Optional<Employee> getEmployeeById(int id) {
+		return employeeRepo.findById(id);
+	}
+	
 	public void updateUser(User user) {
 		User userToUpdate = userRepo.getOne(user.getId());
 		
@@ -50,6 +67,14 @@ public class AuthenticationService {
 		userToUpdate.setRole(user.getRole());
 		
 		userRepo.save(userToUpdate);
+	}
+	
+	private void insertRole(Role role) {
+		roleRepo.save(role);
+	}
+	
+	private void insertMenu(Menu menu) {
+		menuRepo.save(menu);
 	}
 
 }
