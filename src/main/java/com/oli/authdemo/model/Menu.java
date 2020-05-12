@@ -8,7 +8,7 @@ import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 
 @Entity
-@Table(name = "auth_menu")
+@Table(name = "auth_menu", schema="hr")
 public class Menu {
 	@Id
 	@Column(name = "menu_id")
@@ -17,13 +17,13 @@ public class Menu {
 
 	@Column(name = "menu_name")
 	@NotBlank(message="Enter a valid name")
-	private String menu;
+	private String menuName;
 
 	@Column(name = "menu_desc")
 	private String desc;
 	
 	@Column(name = "menu_role")
-	private String role;
+	private String roleName;
 
 	public int getId() {
 		return id;
@@ -33,12 +33,12 @@ public class Menu {
 		this.id = id;
 	}
 
-	public String getMenu() {
-		return menu;
+	public String getMenuName() {
+		return menuName;
 	}
 
-	public void setMenu(String menu) {
-		this.menu = menu;
+	public void setMenuName(String menuName) {
+		this.menuName = menuName;
 	}
 
 	public String getDesc() {
@@ -49,20 +49,19 @@ public class Menu {
 		this.desc = desc;
 	}
 
-	public String getRole() {
-		return role;
+	public String getRoleName() {
+		return roleName;
 	}
 
-	public void setRole(String role) {
-		this.role = role;
+	public void setRoleName(String roleName) {
+		this.roleName = roleName;
 	}
 
 	@Override
 	public String toString() {
-		return "Menu [id=" + id + ", menu=" + menu + ", desc=" + desc + ", role=" + role + "]";
+		return "Menu [id=" + id + ", menuName=" + menuName + ", desc=" + desc + ", roleName=" + roleName + "]";
 	}
 
-	
 	
 	
 }

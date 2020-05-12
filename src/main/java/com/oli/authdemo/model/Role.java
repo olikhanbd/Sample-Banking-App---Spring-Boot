@@ -12,7 +12,7 @@ import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 
 @Entity
-@Table(name = "auth_role")
+@Table(name = "auth_role", schema="hr")
 public class Role {
 	@Id
 	@Column(name = "auth_role_id")
@@ -20,12 +20,12 @@ public class Role {
 	private int id;
 
 	@Column(name = "role_name")
-	@NotBlank(message="Enter a valid first name")
-	private String role;
+	@NotBlank(message="Enter a valid name")
+	private String roleName;
 
 	@Column(name = "role_desc")
 	private String desc;
-	
+
 	public int getId() {
 		return id;
 	}
@@ -34,12 +34,12 @@ public class Role {
 		this.id = id;
 	}
 
-	public String getRole() {
-		return role;
+	public String getRoleName() {
+		return roleName;
 	}
 
-	public void setRole(String role) {
-		this.role = role;
+	public void setRoleName(String roleName) {
+		this.roleName = roleName;
 	}
 
 	public String getDesc() {
@@ -52,7 +52,7 @@ public class Role {
 
 	@Override
 	public String toString() {
-		return "Role [id=" + id + ", role=" + role + ", desc=" + desc + "]";
+		return "Role [id=" + id + ", roleName=" + roleName + ", desc=" + desc + "]";
 	}
 	
 	

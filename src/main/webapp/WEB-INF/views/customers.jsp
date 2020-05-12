@@ -7,8 +7,6 @@
 <title>Insert title here</title>
 </head>
 <body>
-
-	<a href="/login"><input type="submit" value="login"/></a>
-
+customers
 </body>
 </html>

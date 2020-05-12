@@ -20,11 +20,11 @@
         <h1 style="color: #fff; padding: 10px;">Sample Banking System</h2>
         <ul id = "menu">
             <center>
-                <li><a href="/">Users</a></li>
+                <li><a href="/users">Users</a></li>
                 <li><a href="/createuser">Create User</a></li>
-                <li><a href="#">About</a></li>
-                <li><a href="#">Contact</a></li>
-                <li><a href="#">Logout</a></li>
+                <li><a href="/addmenu">Add Menu</a></li>
+                <li><a href="/addrole">Add Role</a></li>
+                <li><a href="/logout">Logout</a></li>
             </center>
         </ul>
     </Div>

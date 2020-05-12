@@ -69,12 +69,20 @@ public class AuthenticationService {
 		userRepo.save(userToUpdate);
 	}
 	
-	private void insertRole(Role role) {
+	public void insertRole(Role role) {
 		roleRepo.save(role);
 	}
 	
-	private void insertMenu(Menu menu) {
+	public List<Role> getRoles(){
+		return roleRepo.findAll();
+	}
+	
+	public void insertMenu(Menu menu) {
 		menuRepo.save(menu);
+	}
+	
+	public List<Menu> getMenus(){
+		return menuRepo.findAll();
 	}
 
 }
