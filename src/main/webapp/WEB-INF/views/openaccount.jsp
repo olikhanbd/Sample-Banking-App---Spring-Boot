@@ -64,6 +64,12 @@
         	<form:errors path="dob" cssClass="error" />
     	</div>
     	<div>
+        	<label for="createDate">Account Create Date</label>
+        	<form:input type="date" name="createDate" path="createDate"/>
+        	</br>
+        	<form:errors path="dob" cssClass="error" />
+    	</div>
+    	<div>
     	<label for="address">Address</label>
         	<form:input type="text" name="address" path="address"/>
         	</br>
@@ -89,6 +95,9 @@
              </c:forEach>
         </form:select>
     	</div>
+    	
+    	<input type="hidden" name="balance" value="0.0"/>
+    	
         <input type="submit" name="Submit" class="btn btn-primary">
         
         

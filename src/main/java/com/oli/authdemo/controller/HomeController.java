@@ -67,7 +67,7 @@ public class HomeController {
 			return mv;
 		}
 		System.out.println("not logged in");
-		mv.setViewName("/index");
+		mv.setViewName("index");
 		return mv;
 	}
 	

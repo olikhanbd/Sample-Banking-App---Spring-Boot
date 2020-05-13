@@ -32,6 +32,10 @@ public class Account {
 	@NotBlank(message="Enter a valid date")
 	private String dob;
 	
+	@Column(name="create_date")
+	@NotBlank(message="Enter a valid date")
+	private String createDate;
+	
 	@Column(name="address")
 	@NotBlank(message="Enter a valid address")
 	private String address;
@@ -52,6 +56,9 @@ public class Account {
 	
 	@Column(name="nid_photo")
 	private String nidPhoto;
+	
+	@Column(name="balance")
+	private double balance;
 
 	public int getAcNumber() {
 		return acNumber;
@@ -91,6 +98,16 @@ public class Account {
 
 	public void setDob(String dob) {
 		this.dob = dob;
+	}
+	
+	
+
+	public String getCreateDate() {
+		return createDate;
+	}
+
+	public void setCreateDate(String createDate) {
+		this.createDate = createDate;
 	}
 
 	public String getAddress() {
@@ -142,14 +159,27 @@ public class Account {
 	public void setNidPhoto(String nidPhoto) {
 		this.nidPhoto = nidPhoto;
 	}
+	
+	
+
+	public double getBalance() {
+		return balance;
+	}
+
+	public void setBalance(double balance) {
+		this.balance = balance;
+	}
 
 	@Override
 	public String toString() {
 		return "Account [acNumber=" + acNumber + ", customerName=" + customerName + ", fathersName=" + fathersName
-				+ ", mothersName=" + mothersName + ", dob=" + dob + ", address=" + address + ", nid=" + nid
-				+ ", phoneNo=" + phoneNo + ", acType=" + acType + ", photo=" + photo + ", nidPhoto=" + nidPhoto + "]";
+				+ ", mothersName=" + mothersName + ", dob=" + dob + ", createDate=" + createDate + ", address="
+				+ address + ", nid=" + nid + ", phoneNo=" + phoneNo + ", acType=" + acType + ", photo=" + photo
+				+ ", nidPhoto=" + nidPhoto + ", balance=" + balance + "]";
 	}
 
+	
+	
 	
 	
 	

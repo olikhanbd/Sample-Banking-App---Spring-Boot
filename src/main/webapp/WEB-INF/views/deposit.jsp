@@ -7,7 +7,7 @@
 <head>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
     <link rel="stylesheet" type="text/css" href="css/global.css"/>
-    <title>Settings</title>
+    <title>Deposit</title>
 </head>
 <body>
     <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
@@ -30,23 +30,18 @@
     </Div>
   </center>
 
-	<h1 style="font-size: 30px; padding:20px color: #009879; text-align: center;">Change Password</h1>
+	<h1 style="font-size: 30px; padding:20px color: #009879; text-align: center;">Deposit</h1>
 
-    <form:form class="container-form" method="post" action="changepass" modelAttribute="changePassModel">
+    <form:form class="container-form" method="post" action="deposit" modelAttribute="transactionModel">
         
-    	<div>
-        	<label for="oldPass">Old Password</label>
-        	<form:input type="password" name="oldPass" path="oldPass"/>
+    	<div style="padding:30px">
+        	<label for="amount">Deposit Amount</label>
+        	<form:input type="amount" name="amount" path="amount"/>
         	</br>
-        	<form:errors path="oldPass" cssClass="error" />
+        	<form:errors path="amount" cssClass="error" />
     	</div>
     	
-    	<div>
-        	<label for="newPass">New Password</label>
-        	<form:input type="password" name="newPass" path="newPass"/>
-        	</br>
-        	<form:errors path="newPass" cssClass="error" />
-    	</div>
+    	<form:input type="hidden" name="acno" path="acno" value="${acno}"/>
     	
         <input type="submit" name="Submit" class="btn btn-primary">
         

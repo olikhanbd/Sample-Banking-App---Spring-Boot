@@ -26,11 +26,15 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.oli.authdemo.model.Account;
 import com.oli.authdemo.model.AccountType;
+import com.oli.authdemo.model.AuthAccount;
 import com.oli.authdemo.model.ChangePassModel;
+import com.oli.authdemo.model.Customer;
 import com.oli.authdemo.model.PhotoModel;
+import com.oli.authdemo.model.TransactionModel;
 import com.oli.authdemo.model.Employee;
 import com.oli.authdemo.model.User;
 import com.oli.authdemo.service.AuthenticationService;
+import com.oli.authdemo.service.CustomerService;
 import com.oli.authdemo.service.EndUserService;
 import com.oli.authdemo.utils.Constants;
 import com.oli.authdemo.utils.RandomString;
@@ -43,6 +47,9 @@ public class EndUserController {
 	
 	@Autowired
 	private AuthenticationService authService;
+	
+	@Autowired
+	private CustomerService customerService;
 	
 	@GetMapping("/accounts")
 	public ModelAndView getAccounts() {
@@ -214,6 +221,86 @@ public class EndUserController {
 		
 		
 		return mv;
+	}
+	
+	@GetMapping("/deposit")
+	public ModelAndView deposit(@RequestParam("id") int id, Model model) {
+		model.addAttribute(new TransactionModel());
+		ModelAndView mv = new ModelAndView();
+		mv.setViewName("deposit");
+		mv.addObject("acno", id);
+		return mv;
+	}
+	
+	@RequestMapping(value = {"/deposit"}, method = RequestMethod.POST)
+	public ModelAndView deposit(@Valid TransactionModel tm, BindingResult bindingResult) {
+		ModelAndView mv = new ModelAndView();
+		mv.setViewName("deposit");
+		
+		if(bindingResult.hasErrors()) {
+			return mv;
+		}
+		
+		Optional<Account> account = service.getAccountByNumber(tm.getAcno());
+		
+		account.get().setBalance(account.get().getBalance() + tm.getAmount());
+		
+		service.updateAccount(account.get());
+		
+		mv.addObject("message", "Deposit Successful");
+		
+		return mv;
+	}
+	
+	@GetMapping("/withdraw")
+	public ModelAndView withdraw(@RequestParam("id") int id, Model model) {
+		
+		model.addAttribute(new TransactionModel());
+		
+		ModelAndView mv = new ModelAndView();
+		mv.setViewName("withdraw");
+		mv.addObject("acno", id);
+		return mv;
+	}
+	
+	@RequestMapping(value = {"/withdraw"}, method = RequestMethod.POST)
+	public ModelAndView withdraw(@Valid TransactionModel tm, BindingResult bindingResult) {
+		ModelAndView mv = new ModelAndView();
+		mv.setViewName("withdraw");
+		
+		if(bindingResult.hasErrors()) {
+			return mv;
+		}
+		
+		Optional<Account> account = service.getAccountByNumber(tm.getAcno());
+		
+		if(tm.getAmount() > account.get().getBalance()) {
+			mv.addObject("message", "Not enough balance!");
+			
+			return mv;
+		}
+		
+		account.get().setBalance(account.get().getBalance() - tm.getAmount());
+		
+		service.updateAccount(account.get());
+		
+		mv.addObject("message", "Withdraw Successful");
+		
+		return mv;
+	}
+	
+	@GetMapping("/test")
+	public String getCustomers() {
+		
+		List<Customer> customers = customerService.getCustomers();
+		List<AuthAccount> accounts = customerService.getAccounts();
+		
+	
+		
+		System.out.println(customers.toString());
+		System.out.println(accounts.toString());
+		
+		return "search";
 	}
 	
 }

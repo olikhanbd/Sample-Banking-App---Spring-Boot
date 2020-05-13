@@ -54,6 +54,7 @@
                 <th>Account No.</th>
                 <th>Name</th>
                 <th>Account Type</th>
+                <th>Balance</th>
                 <th>Action</th>
             </tr>
         </thead>
@@ -63,7 +64,12 @@
             <td><c:out value = "${account.acNumber}"/></td>
             <td><c:out value = "${account.customerName}"/></td>
             <td><c:out value = "${account.acType}"/></td>
-            <td><a href="/uploaddocuments?id=${ac.acNumber}"><button id='updatebtn'>Update</button></a></td>
+            <td><c:out value = "${account.balance}"/></td>
+            <td>
+            	<a href="/uploaddocuments?id=${account.acNumber}"><button id='updatebtn'>Update</button></a>
+            	<a href="/deposit?id=${account.acNumber}"><button id='depositbtn'>Deposit</button></a>
+            	<a href="/withdraw?id=${account.acNumber}"><button id='withdrawbtn'>Withdraw</button></a>
+            </td>
             </tr>
 
         </tbody>

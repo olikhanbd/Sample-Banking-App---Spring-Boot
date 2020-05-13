@@ -42,6 +42,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter{
 		.antMatchers("/updateuser").hasAuthority("admin")
 		.antMatchers("/resetpassword").hasAuthority("admin")
 		.antMatchers("/customers").hasAuthority("user")
+		.antMatchers("/customers").permitAll()
 		.and()
 		.formLogin()
 		.defaultSuccessUrl("/")
