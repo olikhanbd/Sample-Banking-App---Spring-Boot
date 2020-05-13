@@ -1,12 +1,13 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
+<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>  
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %> 
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
     <link rel="stylesheet" type="text/css" href="css/global.css"/>
-    <title>Create User</title>
+    <title>Settings</title>
 </head>
 <body>
     <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
@@ -19,10 +20,10 @@
         <h1 style="color: #fff; padding: 10px;">Sample Banking System</h2>
         <ul id = "menu">
             <center>
-                <li><a href="/users">Users</a></li>
-                <li><a href="/createuser">Create User</a></li>
-                <li><a href="/addmenu">Add Menu</a></li>
-                <li><a href="/addrole">Add Role</a></li>
+                <li><a href="/accounts">Accounts</a></li>
+                <li><a href="/search">Search</a></li>
+                <li><a href="/openaccount">Open Account</a></li>
+                <li><a href="/settings">Settings</a></li>
                 <li><a href="/logout">Logout</a></li>
             </center>
         </ul>
@@ -30,44 +31,30 @@
   </center>
 
 
-    <form class="container-form" method="post" action="updateuser">
+    <form:form class="container-form" method="post" action="changepass" modelAttribute="changePassModel">
         
-        <div>
-        	<label for="id">id</label>
-        	<input type="text" name="id" readOnly value = "${user.id }"/>
-    	</div>
     	<div>
-        	<label for="name">First Name</label>
-        	<input type="text" name="name" value = "${user.name }"/>
+        	<label for="oldPass">Old Password</label>
+        	<form:input type="password" name="oldPass" path="oldPass"/>
+        	</br>
+        	<form:errors path="oldPass" cssClass="error" />
     	</div>
+    	
     	<div>
-        	<label for="lastName">Last Name</label>
-        	<input type="text" name="lastName" value = "${user.lastName }"/>
+        	<label for="newPass">New Password</label>
+        	<form:input type="password" name="newPass" path="newPass"/>
+        	</br>
+        	<form:errors path="newPass" cssClass="error" />
     	</div>
-    	<div>
-        	<label for="email">Email</label>
-        	<input type="text" name="email" value = "${user.email }" readOnly/>
-    	</div>
-    	<div>
-        	<label for="mobile">Mobile</label>
-        	<input type="text" name="mobile" value = "${user.mobile }"/>
-    	</div>
-    	<div>
-        	<input type="hidden" name="password" value = "${user.password }"/>
-    	</div>
-    	<div>
-        	<input type="hidden" name="status" value = "${user.status }"/>
-    	</div>
-    	<div>
-        <label for="role" style="text-align: left; width: 240px;">Role</label>
-        <select name="role">
-            <c:forEach items = "${roles}" var = "role">
-                <option>${role.roleName}</option>
-             </c:forEach>
-        </select>
-    	</div>
+    	
         <input type="submit" name="Submit" class="btn btn-primary">
+        
+        
+        <div align="center" style="margin=10px">
+			<p style="font-size: 40; color: #FF1C19;">${message}</p>
+		</div>
+					
        
-    </form>
+    </form:form>
 </body>
 </html>

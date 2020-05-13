@@ -20,6 +20,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.oli.authdemo.model.Account;
 import com.oli.authdemo.model.Employee;
 import com.oli.authdemo.model.Menu;
 import com.oli.authdemo.model.PostId;
@@ -27,6 +28,7 @@ import com.oli.authdemo.model.Role;
 import com.oli.authdemo.model.User;
 import com.oli.authdemo.service.AuthenticationService;
 import com.oli.authdemo.service.EmailService;
+import com.oli.authdemo.service.EndUserService;
 import com.oli.authdemo.utils.RandomString;
 
 @Controller
@@ -34,6 +36,9 @@ public class HomeController {
 	
 	@Autowired
 	private AuthenticationService authService;
+	
+	@Autowired
+	private EndUserService endUserService;
 	
 	@Autowired
 	private EmailService emailService;
@@ -54,7 +59,11 @@ public class HomeController {
 			return mv;
 		} else if(auth.getAuthorities().contains(new SimpleGrantedAuthority("user"))){
 			System.out.println("User");
-			mv.setViewName("customers");
+			List<Account> accounts = endUserService.getAllAccounts();
+			
+			mv.addObject("accounts", accounts);
+			mv.setViewName("accounts");
+			
 			return mv;
 		}
 		System.out.println("not logged in");
@@ -87,50 +96,60 @@ public class HomeController {
 	}
 	
 	@GetMapping("/createuser")
-	public String createUserPage(Model model) {
+	public ModelAndView createUserPage(Model model) {
 		
 		User user = new User();
 		model.addAttribute("user", user);
+		
+		ModelAndView mv = new ModelAndView();
+		mv.setViewName("createuser");
+		
+		List<Role> roles = authService.getRoles();
+		mv.addObject("roles", roles);
 	
-		return "createuser";
+		return mv;
 	}
 	
 	@RequestMapping(value = { "/createuser" }, method = RequestMethod.POST)
 	public ModelAndView createUser(@Valid User user, BindingResult bindingResult) {
 		
 		ModelAndView mv = new ModelAndView();
+    	
     	mv.setViewName("createuser");
-		
-		
-	    	mv.setViewName("createuser");
-	    	
-	    	Optional<Employee> emp = authService.getEmployeeById(user.getId());
-	    	
-	    	if(emp.isPresent()) {
-	    		System.out.println(emp.toString());
-	    		
-	    		String pass = RandomString.generateString(8);
-				
-				user.setPassword(pass);
-				
-				System.out.println(user.toString());
-				
-				authService.insertUser(user);
-				
-				mv.addObject("message", "User created Successfully");
-				
-				try {
-					emailService.sendEmail(user);
-				} catch (MailException e) {
-					System.out.println(e.toString());
-				}
-				
-	    	} else {
-	    		System.out.println("employee empty");
-	    		mv.addObject("message", "Employee not found");
-	    	}
-	    	
-	        return mv;
+    	
+    	if(bindingResult.hasErrors()) {
+    		List<Role> roles = authService.getRoles();
+    		mv.addObject("roles", roles);
+    		return mv;
+    	}
+    	
+    	Optional<Employee> emp = authService.getEmployeeById(user.getId());
+    	
+    	if(emp.isPresent()) {
+    		System.out.println(emp.toString());
+    		
+    		String pass = RandomString.generateString(8);
+			
+			user.setPassword(pass);
+			
+			System.out.println(user.toString());
+			
+			authService.insertUser(user);
+			
+			mv.addObject("message", "User created Successfully");
+			
+			try {
+				emailService.sendEmail(user);
+			} catch (MailException e) {
+				System.out.println(e.toString());
+			}
+			
+    	} else {
+    		System.out.println("employee empty");
+    		mv.addObject("message", "Employee not found");
+    	}
+    	
+        return mv;
 		
 	}
 	
@@ -148,6 +167,8 @@ public class HomeController {
 		ModelAndView modelAndView = new ModelAndView();
 		modelAndView.setViewName("updateuser"); // resources/template/login.html
 		modelAndView.addObject("user", user.get());
+		List<Role> roles = authService.getRoles();
+		modelAndView.addObject("roles", roles);
 		return modelAndView;
 	}
 	
@@ -231,6 +252,12 @@ public class HomeController {
 		ModelAndView mv = new ModelAndView();
     	
 		mv.setViewName("addmenu");
+		
+		if(bindingResult.hasErrors()) {
+			List<Role> roles = authService.getRoles();
+			mv.addObject("roles", roles);
+			return mv;
+		}
 		authService.insertMenu(menu);
 		mv.addObject("message", "Menu created successfully");
 		
@@ -254,8 +281,12 @@ public class HomeController {
 	public ModelAndView addRole(@Valid Role role, BindingResult bindingResult) {
 		
 		ModelAndView mv = new ModelAndView();
-    	
 		mv.setViewName("addrole");
+		
+		if(bindingResult.hasErrors()) {
+			return mv;
+		}
+		
 		authService.insertRole(role);
 		mv.addObject("message", "Role created successfully");
 		

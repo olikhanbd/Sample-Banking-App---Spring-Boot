@@ -70,8 +70,9 @@
     	<div>
         <label for="role" style="text-align: left; width: 240px;">Role</label>
         <select name="role">
-            <option>Admin</option>
-            <option>User</option>
+            <c:forEach items = "${roles}" var = "role">
+                <option>${role.roleName}</option>
+             </c:forEach>
         </select>
     	</div>
         <input type="submit" name="Submit" class="btn btn-primary">
