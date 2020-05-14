@@ -55,7 +55,7 @@
             <tr>
             <td><c:out value = "${user.id}"/></td>
             <td><c:out value = "${user.name} ${user.lastName }"/></td>
-            <td><c:out value = "${user.role}"/></td>
+            <td><c:out value = "${user.role.roleName}"/></td>
             <td><a href="/updateuser?id=${user.id}"><button id='updatebtn'>Update</button></a></td>
             <td><a href="/resetpassword?id=${user.id}"><button id='resetbtn'>Reset Password</button></a></td>
             </tr>

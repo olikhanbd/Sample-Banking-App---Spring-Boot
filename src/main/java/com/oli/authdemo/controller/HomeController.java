@@ -154,9 +154,12 @@ public class HomeController {
 	}
 	
 	@RequestMapping(value = { "/updateuser" }, method = RequestMethod.GET)
-	public ModelAndView updateUser(@RequestParam("id") int id) {
+	public ModelAndView updateUser(@RequestParam("id") int id, Model model) {
 		
 		Optional<User> user = authService.findUserById(id);
+		
+		model.addAttribute("user", new User());
+		model.addAttribute("role", new Role());
 		
 		if(user != null) {
 			System.out.println(user.toString());
@@ -173,11 +176,28 @@ public class HomeController {
 	}
 	
 	@RequestMapping(value = { "/updateuser" }, method = RequestMethod.POST)
-	public void updateUser(User user) {
+	public ModelAndView updateUser(@Valid User user, BindingResult bindingResult, Model model) {
+		
+		ModelAndView mv = new ModelAndView();
+		
+		model.addAttribute("user", user);
+		model.addAttribute("role", user.getRole());
+		
+    	
+    	mv.setViewName("updateuser");
+		
+		if(bindingResult.hasErrors()){
+			mv.addObject("message", "User update failed");
+			return mv;
+		}
 		
 		System.out.println(user.toString());
 		
 		authService.updateUser(user);
+		
+		mv.addObject("message", "User updated Successfully");
+		
+		return mv;
 		
 	}
 	
@@ -236,11 +256,11 @@ public class HomeController {
 	public ModelAndView addMenu(Model model) {
 		ModelAndView mv = new ModelAndView();
 		Menu menu = new Menu();
-		List<Role> roles = authService.getRoles();
-		System.out.println(roles.toString());
+//		List<Role> roles = authService.getRoles();
+//		System.out.println(roles.toString());
 		model.addAttribute("menu", menu);
 		
-		mv.addObject("roles", roles);
+//		mv.addObject("roles", roles);
 		mv.setViewName("addmenu");
 	
 		return mv;
@@ -250,6 +270,7 @@ public class HomeController {
 	public ModelAndView addMenu(@Valid Menu menu, BindingResult bindingResult) {
 		
 		ModelAndView mv = new ModelAndView();
+		
     	
 		mv.setViewName("addmenu");
 		

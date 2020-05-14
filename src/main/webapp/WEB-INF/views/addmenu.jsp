@@ -50,15 +50,7 @@
         <form:input type="text" id="desc" name="desc" path="desc"/>
 
     </div>
-        <div>
-            <label for="roleName" style="text-align: left; width: 240px;">Role</label>
-            <select name="roleName">
-            	<c:forEach items = "${roles}" var = "role">
-                	<option>${role.roleName}</option>
-                </c:forEach>
-            </select>
-        </div>
-
+        
         <input type="submit" name="Submit" class="btn btn-primary">
         
         <div align="center" style="margin=10px">

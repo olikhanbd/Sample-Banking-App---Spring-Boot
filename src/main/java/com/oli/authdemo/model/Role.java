@@ -5,11 +5,15 @@ import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.Id;
 import javax.persistence.ManyToMany;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
+
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 @Entity
 @Table(name = "auth_role", schema="hr")
@@ -25,6 +29,10 @@ public class Role {
 
 	@Column(name = "role_desc")
 	private String desc;
+
+	@OneToMany(fetch = FetchType.LAZY, mappedBy = "role")
+	@JsonManagedReference
+    private List<User> users;
 
 	public int getId() {
 		return id;
@@ -50,10 +58,20 @@ public class Role {
 		this.desc = desc;
 	}
 
+	public List<User> getUsers() {
+		return users;
+	}
+
+	public void setUsers(List<User> users) {
+		this.users = users;
+	}
+
 	@Override
 	public String toString() {
-		return "Role [id=" + id + ", roleName=" + roleName + ", desc=" + desc + "]";
+		return "Role [id=" + id + ", roleName=" + roleName + ", desc=" + desc + ", users=" + users + "]";
 	}
+	
+	
 	
 	
 

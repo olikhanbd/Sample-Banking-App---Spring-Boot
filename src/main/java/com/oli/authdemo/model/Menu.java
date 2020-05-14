@@ -21,9 +21,6 @@ public class Menu {
 
 	@Column(name = "menu_desc")
 	private String desc;
-	
-	@Column(name = "menu_role")
-	private String roleName;
 
 	public int getId() {
 		return id;
@@ -49,17 +46,9 @@ public class Menu {
 		this.desc = desc;
 	}
 
-	public String getRoleName() {
-		return roleName;
-	}
-
-	public void setRoleName(String roleName) {
-		this.roleName = roleName;
-	}
-
 	@Override
 	public String toString() {
-		return "Menu [id=" + id + ", menuName=" + menuName + ", desc=" + desc + ", roleName=" + roleName + "]";
+		return "Menu [id=" + id + ", menuName=" + menuName + ", desc=" + desc + "]";
 	}
 
 	

@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %> 
+<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>  
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -30,7 +31,7 @@
   </center>
 
 
-    <form class="container-form" method="post" action="updateuser">
+    <form class="container-form" method="post" action="updateuser" modelAttribute="user">
         
         <div>
         	<label for="id">id</label>
@@ -60,13 +61,15 @@
     	</div>
     	<div>
         <label for="role" style="text-align: left; width: 240px;">Role</label>
-        <select name="role">
-            <c:forEach items = "${roles}" var = "role">
-                <option>${role.roleName}</option>
-             </c:forEach>
-        </select>
+        <form:select name="role" id="role" path="role">
+            <form:options items="${roles}" itemValue="id" itemLabel="roleName"/>
+        </form:select>
     	</div>
         <input type="submit" name="Submit" class="btn btn-primary">
+        
+        <div align="center" style="margin=10px">
+			<p style="font-size: 40; color: #FF1C19;">${message}</p>
+		</div>
        
     </form>
 </body>
