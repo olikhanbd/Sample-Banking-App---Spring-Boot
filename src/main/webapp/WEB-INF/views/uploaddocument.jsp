@@ -40,7 +40,7 @@
         <div>
             <label for="photo">Photo</label>
             <input type="file" name="photo" path="photo"/>
-            <input type="hidden" name="acno" path="acno" value="${account.acNumber}"/>
+            <input type="hidden" name="acno" path="acno" value="${account.acno}"/>
             <input type="submit" name="submitphoto" value="Upload"/>
         </div>
         
@@ -55,7 +55,7 @@
         <div>
             <label for="nid">National ID</label>
             <input type="file" name="nid"/>
-            <input type="hidden" name="acno" value="${account.acNumber}"/>
+            <input type="hidden" name="acno" value="${account.acno}"/>
             <input type="submit" name="submitnid" value="Upload"/>
         </div>
         

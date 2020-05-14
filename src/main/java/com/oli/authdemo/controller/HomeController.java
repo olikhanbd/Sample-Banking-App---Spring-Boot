@@ -21,12 +21,14 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.oli.authdemo.model.Account;
+import com.oli.authdemo.model.AuthAccount;
 import com.oli.authdemo.model.Employee;
 import com.oli.authdemo.model.Menu;
 import com.oli.authdemo.model.PostId;
 import com.oli.authdemo.model.Role;
 import com.oli.authdemo.model.User;
 import com.oli.authdemo.service.AuthenticationService;
+import com.oli.authdemo.service.CustomerService;
 import com.oli.authdemo.service.EmailService;
 import com.oli.authdemo.service.EndUserService;
 import com.oli.authdemo.utils.RandomString;
@@ -39,6 +41,9 @@ public class HomeController {
 	
 	@Autowired
 	private EndUserService endUserService;
+	
+	@Autowired
+	private CustomerService customerService;
 	
 	@Autowired
 	private EmailService emailService;
@@ -59,7 +64,7 @@ public class HomeController {
 			return mv;
 		} else if(auth.getAuthorities().contains(new SimpleGrantedAuthority("user"))){
 			System.out.println("User");
-			List<Account> accounts = endUserService.getAllAccounts();
+			List<AuthAccount> accounts = customerService.getAccounts();
 			
 			mv.addObject("accounts", accounts);
 			mv.setViewName("accounts");

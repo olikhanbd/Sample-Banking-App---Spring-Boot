@@ -38,10 +38,10 @@ public class Customer {
 	private String address;
 	
 	@Column(name="phoneno")
-	private String phoneno;
+	private int phoneno;
 	
 	@Column(name="nid")
-	private String nid;
+	private int nid;
 	
 	@Column(name="photo")
 	private String photo;
@@ -101,19 +101,19 @@ public class Customer {
 		this.address = address;
 	}
 
-	public String getPhoneno() {
+	public int getPhoneno() {
 		return phoneno;
 	}
 
-	public void setPhoneno(String phoneno) {
+	public void setPhoneno(int phoneno) {
 		this.phoneno = phoneno;
 	}
 
-	public String getNid() {
+	public int getNid() {
 		return nid;
 	}
 
-	public void setNid(String nid) {
+	public void setNid(int nid) {
 		this.nid = nid;
 	}
 

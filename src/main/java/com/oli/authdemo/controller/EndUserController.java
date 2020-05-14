@@ -54,7 +54,7 @@ public class EndUserController {
 	@GetMapping("/accounts")
 	public ModelAndView getAccounts() {
 	
-		List<Account> accounts = service.getAllAccounts();
+		List<AuthAccount> accounts = customerService.getAccounts();
 		
 		ModelAndView mv = new ModelAndView();
 		mv.addObject("accounts", accounts);
@@ -85,10 +85,30 @@ public class EndUserController {
     		List<AccountType> actypes = service.getAccountTypes();
     		return mv;
     	}
-		
-    	System.out.println(account.toString());
     	
-    	service.insertAccount(account);
+    	account.setDob("25-JUN-53");
+		account.setCreateDate("25-JUN-53");
+		
+    	Optional<Customer> checkCustomer = customerService.getCustomerByNid(account.getNid());
+    	
+    	if(checkCustomer.isPresent()) {
+    	
+    		System.out.println("customer found");
+    	
+//    		customerService.insertCustomer(generateCustomer(account));
+    	
+//    		Optional<Customer> customer = customerService.getCustomerByNid(account.getNid());
+    		
+    		customerService.insertAccount(generateAccount(account, checkCustomer.get()));
+    	} else {
+    		System.out.println("customer not found");
+    		customerService.insertCustomer(generateCustomer(account));
+    		Optional<Customer> customer = customerService.getCustomerByNid(account.getNid());
+    		customerService.insertAccount(generateAccount(account, customer.get()));
+    	}
+    	
+    	
+//    	service.insertAccount(account);
     	
     	mv.addObject("message", "Account created Successfully");
     	
@@ -98,7 +118,7 @@ public class EndUserController {
 	
 	@GetMapping("/uploaddocuments")
 	public ModelAndView uploadDocuments(@RequestParam("id") int acid, Model model) {
-		Optional<Account> account = service.getAccountByNumber(acid);
+		Optional<AuthAccount> account = customerService.getAccountById(acid);
 		
 		model.addAttribute(new PhotoModel());
 		
@@ -112,7 +132,7 @@ public class EndUserController {
 	@RequestMapping(value = {"/uploadphoto"}, method = RequestMethod.POST)
 	public ModelAndView uploadPhoto(@RequestParam("photo") MultipartFile file, @RequestParam("acno") int acno) {
 		ModelAndView mv = new ModelAndView();
-		Optional<Account> account = service.getAccountByNumber(acno);
+		Optional<AuthAccount> account = customerService.getAccountById(acno);
 		mv.setViewName("uploaddocument");
 		mv.addObject("account", account.get());
 		
@@ -121,9 +141,9 @@ public class EndUserController {
 		try {
 			Files.write(fileNameAndPath, file.getBytes());
 			
-			account.get().setPhoto(file.getOriginalFilename());
+			account.get().getCustomer().setPhoto(file.getOriginalFilename());
 			
-			service.updateAccount(account.get());
+			customerService.updateCustomer(account.get().getCustomer());
 			
 			mv.addObject("messagephoto", "Photo uploaded Successfully");
 			
@@ -139,7 +159,7 @@ public class EndUserController {
 	@RequestMapping(value = {"/uploadnid"}, method = RequestMethod.POST)
 	public ModelAndView uploadNid(@RequestParam("nid") MultipartFile file, @RequestParam("acno") int acno) {
 		ModelAndView mv = new ModelAndView();
-		Optional<Account> account = service.getAccountByNumber(acno);
+		Optional<AuthAccount> account = customerService.getAccountById(acno);
 		mv.setViewName("uploaddocument");
 		mv.addObject("account", account.get());
 		
@@ -148,9 +168,9 @@ public class EndUserController {
 		try {
 			Files.write(fileNameAndPath, file.getBytes());
 			
-			account.get().setNidPhoto(file.getOriginalFilename());
+			account.get().getCustomer().setNidPhoto(file.getOriginalFilename());
 			
-			service.updateAccount(account.get());
+			customerService.updateCustomer(account.get().getCustomer());
 			
 			mv.addObject("messagenid", "Photo uploaded Successfully");
 			
@@ -208,7 +228,7 @@ public class EndUserController {
 		ModelAndView mv = new ModelAndView();
 		mv.setViewName("search");
 		
-		Optional<Account> account = service.getAccountByNumber(acno);
+		Optional<AuthAccount> account = customerService.getAccountById(acno);
 		
 		if(account.isPresent()) {
 			mv.addObject("accountFound", true);
@@ -241,11 +261,11 @@ public class EndUserController {
 			return mv;
 		}
 		
-		Optional<Account> account = service.getAccountByNumber(tm.getAcno());
+		Optional<AuthAccount> account = customerService.getAccountById(tm.getAcno());
 		
 		account.get().setBalance(account.get().getBalance() + tm.getAmount());
 		
-		service.updateAccount(account.get());
+		customerService.updateAccount(account.get());
 		
 		mv.addObject("message", "Deposit Successful");
 		
@@ -272,7 +292,7 @@ public class EndUserController {
 			return mv;
 		}
 		
-		Optional<Account> account = service.getAccountByNumber(tm.getAcno());
+		Optional<AuthAccount> account = customerService.getAccountById(tm.getAcno());
 		
 		if(tm.getAmount() > account.get().getBalance()) {
 			mv.addObject("message", "Not enough balance!");
@@ -282,7 +302,7 @@ public class EndUserController {
 		
 		account.get().setBalance(account.get().getBalance() - tm.getAmount());
 		
-		service.updateAccount(account.get());
+		customerService.updateAccount(account.get());
 		
 		mv.addObject("message", "Withdraw Successful");
 		
@@ -301,6 +321,31 @@ public class EndUserController {
 		System.out.println(accounts.toString());
 		
 		return "search";
+	}
+	
+	private Customer generateCustomer(Account acc) {
+		Customer customer = new Customer();
+		customer.setCname(acc.getCustomerName());
+		customer.setDob(acc.getDob());
+		customer.setFname(acc.getFathersName());
+		customer.setMname(acc.getMothersName());
+		customer.setAddress(acc.getAddress());
+		customer.setPhoneno(acc.getPhoneNo());
+		customer.setNid(acc.getNid());
+		customer.setPhoto(acc.getPhoto());
+		customer.setNidPhoto(acc.getNidPhoto());
+		
+		return customer;
+	}
+	
+	private AuthAccount generateAccount(Account ac, Customer customer) {
+		AuthAccount act = new AuthAccount();
+		act.setCreateDate(ac.getCreateDate());
+		act.setAcType(ac.getAcType());
+		act.setBalance(ac.getBalance());
+		act.setCustomer(customer);
+		
+		return act;
 	}
 	
 }

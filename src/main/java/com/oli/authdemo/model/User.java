@@ -27,7 +27,7 @@ import com.fasterxml.jackson.annotation.JsonBackReference;
 public class User {
 
 	@Id
-	@Column(name = "AUTH_USER_ID")
+	@Column(name = "USER_ID")
 	@NotNull(message="Enter a valid user id")
 	private int id;
 
@@ -58,7 +58,7 @@ public class User {
 	 
 
 	@ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "auth_role_id")
+    @JoinColumn(name = "role_id")
 	@JsonBackReference
     private Role role;
 

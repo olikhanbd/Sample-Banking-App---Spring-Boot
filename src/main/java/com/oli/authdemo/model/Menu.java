@@ -8,7 +8,7 @@ import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 
 @Entity
-@Table(name = "auth_menu", schema="hr")
+@Table(name = "menu", schema="hr")
 public class Menu {
 	@Id
 	@Column(name = "menu_id")

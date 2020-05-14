@@ -61,14 +61,14 @@
         <tbody>
 
             <tr>
-            <td><c:out value = "${account.acNumber}"/></td>
-            <td><c:out value = "${account.customerName}"/></td>
+            <td><c:out value = "${account.acno}"/></td>
+            <td><c:out value = "${account.customer.cname}"/></td>
             <td><c:out value = "${account.acType}"/></td>
             <td><c:out value = "${account.balance}"/></td>
             <td>
-            	<a href="/uploaddocuments?id=${account.acNumber}"><button id='updatebtn'>Update</button></a>
-            	<a href="/deposit?id=${account.acNumber}"><button id='depositbtn'>Deposit</button></a>
-            	<a href="/withdraw?id=${account.acNumber}"><button id='withdrawbtn'>Withdraw</button></a>
+            	<a href="/uploaddocuments?id=${account.acno}"><button id='updatebtn'>Update</button></a>
+            	<a href="/deposit?id=${account.acno}"><button id='depositbtn'>Deposit</button></a>
+            	<a href="/withdraw?id=${account.acno}"><button id='withdrawbtn'>Withdraw</button></a>
             </td>
             </tr>
 

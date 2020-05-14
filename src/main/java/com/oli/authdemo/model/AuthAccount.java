@@ -19,8 +19,7 @@ public class AuthAccount {
 
 	@Id
 	@Column(name="ACNO")
-	@GeneratedValue(generator = "AC_SEQ")
-	@SequenceGenerator(name = "AC_SEQ", sequenceName = "auth_account_Sequence",allocationSize = 1, initialValue = 1, schema="hr")
+	@GeneratedValue(strategy = GenerationType.AUTO)
 	private int acno;
 	
 	//@Column(name="customer_id")
@@ -30,7 +29,7 @@ public class AuthAccount {
 	private String createDate;
 	
 	@Column(name="BALANCE")
-	private int balance;
+	private Double balance;
 	
 	@Column(name="AC_TYPE")
 	private String acType;
@@ -56,11 +55,11 @@ public class AuthAccount {
 		this.createDate = createDate;
 	}
 
-	public int getBalance() {
+	public Double getBalance() {
 		return balance;
 	}
 
-	public void setBalance(int balance) {
+	public void setBalance(Double balance) {
 		this.balance = balance;
 	}
 

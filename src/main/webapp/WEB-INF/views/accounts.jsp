@@ -48,14 +48,14 @@
             <c:forEach items = "${accounts}" var = "ac">
             
             <tr>
-            <td><c:out value = "${ac.acNumber}"/></td>
-            <td><c:out value = "${ac.customerName}"/></td>
+            <td><c:out value = "${ac.acno}"/></td>
+            <td><c:out value = "${ac.customer.cname}"/></td>
             <td><c:out value = "${ac.acType}"/></td>
             <td><c:out value = "${ac.balance}"/></td>
             <td>
-            	<a href="/uploaddocuments?id=${ac.acNumber}"><button id='updatebtn'>Update</button></a>
-            	<a href="/deposit?id=${ac.acNumber}"><button id='depositbtn'>Deposit</button></a>
-            	<a href="/withdraw?id=${ac.acNumber}"><button id='withdrawbtn'>Withdraw</button></a>
+            	<a href="/uploaddocuments?id=${ac.acno}"><button id='updatebtn'>Update</button></a>
+            	<a href="/deposit?id=${ac.acno}"><button id='depositbtn'>Deposit</button></a>
+            	<a href="/withdraw?id=${ac.acno}"><button id='withdrawbtn'>Withdraw</button></a>
             </td>
             </tr>
             

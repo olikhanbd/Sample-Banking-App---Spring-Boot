@@ -16,10 +16,10 @@ import javax.validation.constraints.NotNull;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 @Entity
-@Table(name = "auth_role", schema="hr")
+@Table(name = "role", schema="hr")
 public class Role {
 	@Id
-	@Column(name = "auth_role_id")
+	@Column(name = "role_id")
 	@NotNull(message="Enter a valid id")
 	private int id;
 

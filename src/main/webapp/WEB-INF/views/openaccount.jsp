@@ -33,12 +33,8 @@
 
     <form:form class="container-form" method="post" action="openaccount" modelAttribute="account">
         
-        <div>
-        	<label for="acNumber">Account Number</label>
-        	<form:input type="text" name="acNumber" path="acNumber"/>
-        	</br>
-        	<form:errors path="acNumber" cssClass="error" />
-    	</div>
+        
+    	<form:input type="hidden" name="acNumber" path="acNumber"/>
     	<div>
         	<label for="customerName">Customer Name</label>
         	<form:input type="text" name="customerName" path="customerName"/>
