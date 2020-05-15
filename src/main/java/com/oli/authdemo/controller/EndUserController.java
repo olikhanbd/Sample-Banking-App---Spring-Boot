@@ -86,8 +86,14 @@ public class EndUserController {
     		return mv;
     	}
     	
-    	account.setDob("25-JUN-53");
-		account.setCreateDate("25-JUN-53");
+    	System.out.println(account.getDob());
+    	System.out.println(account.getCreateDate());
+    	
+    	System.out.println(Constants.formatDate(account.getDob()));
+    	System.out.println(Constants.formatDate(account.getCreateDate()));
+    	
+    	account.setDob(Constants.formatDate(account.getDob()));
+		account.setCreateDate(Constants.formatDate(account.getCreateDate()));
 		
     	Optional<Customer> checkCustomer = customerService.getCustomerByNid(account.getNid());
     	
@@ -261,11 +267,9 @@ public class EndUserController {
 			return mv;
 		}
 		
-		Optional<AuthAccount> account = customerService.getAccountById(tm.getAcno());
+		System.out.println(tm.getAcno() + " " +tm.getAmount());
 		
-		account.get().setBalance(account.get().getBalance() + tm.getAmount());
-		
-		customerService.updateAccount(account.get());
+		customerService.depositMoney(tm.getAcno(), tm.getAmount());
 		
 		mv.addObject("message", "Deposit Successful");
 		
@@ -292,17 +296,16 @@ public class EndUserController {
 			return mv;
 		}
 		
-		Optional<AuthAccount> account = customerService.getAccountById(tm.getAcno());
+		Optional<AuthAccount> authAc = customerService.getAccountById(tm.getAcno());
 		
-		if(tm.getAmount() > account.get().getBalance()) {
-			mv.addObject("message", "Not enough balance!");
-			
-			return mv;
+		if(authAc.isPresent()) {
+			if(authAc.get().getBalance() < tm.getAmount()) {
+				mv.addObject("message", "Not enough balance");
+				return mv;
+			}
 		}
 		
-		account.get().setBalance(account.get().getBalance() - tm.getAmount());
-		
-		customerService.updateAccount(account.get());
+		customerService.withdrawMoney(tm.getAcno(), tm.getAmount());
 		
 		mv.addObject("message", "Withdraw Successful");
 		

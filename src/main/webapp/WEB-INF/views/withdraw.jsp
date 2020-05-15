@@ -35,7 +35,7 @@
     <form:form class="container-form" method="post" action="withdraw" modelAttribute="transactionModel">
         
     	<div style="padding:30px">
-        	<label for="amount">Deposit Amount</label>
+        	<label for="amount">Withdraw Amount</label>
         	<form:input type="amount" name="amount" path="amount"/>
         	</br>
         	<form:errors path="amount" cssClass="error" />

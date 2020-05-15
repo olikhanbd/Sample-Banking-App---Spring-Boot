@@ -10,6 +10,7 @@ import com.oli.authdemo.dao.AuthAccountRepository;
 import com.oli.authdemo.dao.CustomerRepository;
 import com.oli.authdemo.model.AuthAccount;
 import com.oli.authdemo.model.Customer;
+import com.oli.authdemo.utils.Constants;
 
 @Service
 public class CustomerService {
@@ -44,16 +45,24 @@ public class CustomerService {
 		acRepo.save(acc);
 	}
 	
+	public void depositMoney(int acno, double amount) {
+		acRepo.depositMoney(acno, amount);
+	}
+	
+	public void withdrawMoney(int acno, double amount) {
+		acRepo.withdrawMoney(acno, amount);
+	}
+	
 	public void updateAccount(AuthAccount acc) {
 		AuthAccount acToUpdate = acRepo.getOne(acc.getAcno());
 		acToUpdate.setBalance(acc.getBalance());
-		acToUpdate.setCreateDate("25-JUN-53");
+		acToUpdate.setCreateDate(Constants.formatDate(acc.getCreateDate()));
 		acRepo.save(acToUpdate);
 	}
 	
 	public void updateCustomer(Customer customer) {
 		Customer c = customerRepo.getOne(customer.getCid());
-		c.setDob("25-JUN-53");
+		c.setDob(Constants.formatDate(customer.getDob()));
 		c.setPhoto(customer.getPhoto());
 		c.setNidPhoto(customer.getNidPhoto());
 		

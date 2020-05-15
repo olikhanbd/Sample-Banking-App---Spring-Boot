@@ -35,7 +35,7 @@
     <form:form class="container-form" method="post" action="changepass" modelAttribute="changePassModel">
         
     	<div>
-        	<label for="oldPass">Old Password</label>
+        	<label for="oldPass">Current Password</label>
         	<form:input type="password" name="oldPass" path="oldPass"/>
         	</br>
         	<form:errors path="oldPass" cssClass="error" />
